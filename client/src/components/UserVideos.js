@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Video from "./Video";
-import VideoForm from "./VideoForm";
 import { Card, Row, Col, Label, Input, Button } from "reactstrap";
 import {
   getAllVideosWithComments,
   searchVideos,
 } from "../modules/videoManager";
+import { useParams } from "react-router-dom";
 
-const VideoList = () => {
+const UserVideos = () => {
   const [videos, setVideos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortDescending, setSortDescending] = useState(false);
+  const { id } = useParams();
 
   const getVideos = () => {
-    getAllVideosWithComments().then((videos) => setVideos(videos));
+    getAllVideosWithComments().then((videos) => {
+      videos = videos.filter((video) => (video.userProfileId === parseInt(id)));
+      setVideos(videos);
+    });
   };
 
   useEffect(() => {
@@ -71,9 +75,7 @@ const VideoList = () => {
           </Row>
         </div>
       </Card>
-      <div>
-        {/* <VideoForm getVideos={getVideos} videos={videos} /> */}
-      </div>
+      <div>{/* <VideoForm getVideos={getVideos} videos={videos} /> */}</div>
       <Row className="justify-content-center">
         {videos.map((video, index) => (
           <Video video={video} key={parseInt(video.id)} />
@@ -83,4 +85,4 @@ const VideoList = () => {
   );
 };
 
-export default VideoList;
+export default UserVideos;

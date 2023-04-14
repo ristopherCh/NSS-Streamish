@@ -1,10 +1,21 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const Video = ({ video }) => {
   return (
     <Card>
-      <p className="text-left px-2">Posted by: {video.userProfile.name}</p>
+      <div>
+        Posted by:{" "}
+        <Link to={`/users/${video.userProfileId}`}>
+          <strong>{video.userProfile.name}</strong>
+        </Link>
+      </div>
+
+      <Link to={`/videos/${video.id}`}>
+        <strong>{video.title}</strong>
+      </Link>
+      <p className="text-left m-2"></p>
       <CardBody>
         <iframe
           className="video"
@@ -14,16 +25,14 @@ const Video = ({ video }) => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
-
-        <p>
-          <strong>{video.title}</strong>
-        </p>
-        <h4>{video.description}</h4>
-        <h5>Comments</h5>
+        <p>{video.description}</p>
+        <h5 className="m-3">Comments</h5>
         <ul className="list-unstyled">
-          {video.comments.map((comment) => (
+          {video.comments.map((comment, index) => (
             <>
-              <li className="text-left">{comment.message}</li>
+              <li className="text-left" key={parseInt(comment.id)}>
+                {comment.message}
+              </li>
             </>
           ))}
         </ul>

@@ -1,7 +1,17 @@
-const baseUrl = "/api/video/GetWithComments";
+const baseUrl = "/api/video";
 
 export const getAllVideos = () => {
   return fetch(baseUrl).then((res) => res.json());
+};
+
+export const getAllVideosWithComments = () => {
+  return fetch(`${baseUrl}/GetWithComments`).then((res) => res.json());
+};
+
+export const searchVideos = (string, sortDesc) => {
+  return fetch(`${baseUrl}/search/?q=${string}&sortDesc=${sortDesc}`).then(
+    (res) => res.json()
+  );
 };
 
 export const addVideo = (video) => {
@@ -12,4 +22,11 @@ export const addVideo = (video) => {
     },
     body: JSON.stringify(video),
   });
+};
+
+export const getVideo = (id) => {
+  // console.log(`${baseUrl}/GetByIdWithComments/${id}`);
+  return fetch(`${baseUrl}/GetByIdWithComments/${id}`).then((res) =>
+    res.json()
+  );
 };
