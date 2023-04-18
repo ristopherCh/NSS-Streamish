@@ -21,16 +21,16 @@ namespace Streamish.Controllers
 			_userProfileRepository = userProfileRepository;
 		}
 
-		[HttpGet("{firebaseUserId}")]
-		public IActionResult GetByFirebaseUserId(string firebaseUserId)
-		{
-			var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
-			if (userProfile == null)
-			{
-				return NotFound();
-			}
-			return Ok(userProfile);
-		}
+		//[HttpGet("{firebaseUserId}")]
+		//public IActionResult GetByFirebaseUserId(string firebaseUserId)
+		//{
+		//	var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+		//	if (userProfile == null)
+		//	{
+		//		return NotFound();
+		//	}
+		//	return Ok(userProfile);
+		//}
 
 		[HttpGet("Me")]
 		public IActionResult Me()

@@ -1,14 +1,26 @@
-import React, { useEffect, useState, setSortDescending, sortDescending } from "react";
+import React from "react";
 import { Col, Label, Input, Button, Form } from "reactstrap";
-import {
-  searchVideos,
-} from "../modules/videoManager";
+import { searchVideos } from "../modules/videoManager";
 
-const SearchBar = ({ setVideos, searchQuery, setSearchQuery, sortDescending, setSortDescending }) => {
+const SearchBar = ({
+  setVideos,
+  searchQuery,
+  setSearchQuery,
+  sortDescending,
+  setSortDescending,
+  id,
+}) => {
+  const searchSubmit = (event) => {
+    event.preventDefault();
+    searchVideos(searchQuery, sortDescending).then((result) => {
+      let videos = result.filter((video) => video.userProfileId === parseInt(id));
+      setVideos(videos);
+    });
+  };
 
   return (
     <>
-      <Form className="m-2">
+      <Form className="m-2" onSubmit={searchSubmit}>
         <div className="m-4">
           <div className="d-flex flex-column align-items-center">
             <Col>
@@ -41,16 +53,7 @@ const SearchBar = ({ setVideos, searchQuery, setSearchQuery, sortDescending, set
               />
             </Col>
             <Col>
-              <Button
-                onClick={(event) => {
-                  event.preventDefault();
-                  searchVideos(searchQuery, sortDescending).then((result) => {
-                    setVideos(result);
-                  });
-                }}
-              >
-                Search
-              </Button>
+              <Button>Search</Button>
             </Col>
           </div>
         </div>

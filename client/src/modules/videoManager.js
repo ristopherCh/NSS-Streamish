@@ -6,8 +6,6 @@ export const getAllVideos = () => {
   return fetch(baseUrl).then((res) => res.json());
 };
 
-
-
 export const searchVideos = (string, sortDesc) => {
   return getToken().then((token) => {
     return fetch(`${baseUrl}/search/?q=${string}&sortDesc=${sortDesc}`, {

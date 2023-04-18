@@ -196,14 +196,15 @@ namespace Streamish.Repositories
 				using (var cmd = conn.CreateCommand())
 				{
 					cmd.CommandText = @"
-					INSERT INTO UserProfile (Name, Email, ImageUrl, DateCreated) 
+					INSERT INTO UserProfile (Name, Email, ImageUrl, DateCreated, FirebaseUserId) 
 					OUTPUT INSERTED.ID
-					VALUES (@Name, @Email, @ImageUrl, @DateCreated)";
+					VALUES (@Name, @Email, @ImageUrl, @DateCreated, @FirebaseUserId)";
 
 					DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
 					DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
 					DbUtils.AddParameter(cmd, "@ImageUrl", userProfile.ImageUrl);
 					DbUtils.AddParameter(cmd, "@DateCreated", userProfile.DateCreated);
+					DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
 
 					userProfile.Id = (int)cmd.ExecuteScalar();
 				}
