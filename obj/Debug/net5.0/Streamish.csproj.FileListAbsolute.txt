@@ -70,3 +70,4 @@ C:\Users\chans\workspace\Streamish\obj\Debug\net5.0\ref\Streamish.dll
 C:\Users\chans\workspace\Streamish\bin\Debug\net5.0\client\package-lock.json
 C:\Users\chans\workspace\Streamish\bin\Debug\net5.0\client\package.json
 C:\Users\chans\workspace\Streamish\bin\Debug\net5.0\client\public\manifest.json
+C:\Users\chans\workspace\Streamish\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

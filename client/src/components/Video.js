@@ -8,7 +8,7 @@ const Video = ({ video }) => {
       <div>
         Posted by:{" "}
         <Link to={`/users/${video.userProfileId}`}>
-          <strong>{video.userProfile.name}</strong>
+          <strong>{video.userProfile?.name}</strong>
         </Link>
       </div>
 
@@ -28,9 +28,9 @@ const Video = ({ video }) => {
         <p>{video.description}</p>
         <h5 className="m-3">Comments</h5>
         <ul className="list-unstyled">
-          {video.comments.map((comment, index) => (
+          {video.comments?.map((comment, index) => (
             <>
-              <li className="text-left" key={parseInt(comment.id)}>
+              <li className="text-left" key={parseInt(index)}>
                 {comment.message}
               </li>
             </>

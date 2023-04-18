@@ -2,17 +2,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Streamish.Repositories;
 using Streamish.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Streamish.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class VideoController : ControllerBase
 	{
 		private readonly IVideoRepository _videoRepository;
-		public VideoController(IVideoRepository videoRepository)
+		private readonly IUserProfileRepository _userProfileRepository;
+
+		public VideoController(IVideoRepository videoRepository, IUserProfileRepository userProfileRepository)
 		{
 			_videoRepository = videoRepository;
+			_userProfileRepository = userProfileRepository;
 		}
 
 		[HttpGet]
@@ -37,7 +43,8 @@ namespace Streamish.Controllers
 		{
 			// NOTE: This is only temporary to set the UserProfileId until we implement login
 			// TODO: After we implement login, use the id of the current user
-			video.UserProfileId = 2;
+			var currentUserProfile = GetCurrentUserProfile();
+			video.UserProfileId = currentUserProfile.Id;
 
 			video.DateCreated = DateTime.Now;
 			if (string.IsNullOrWhiteSpace(video.Description))
@@ -124,6 +131,12 @@ namespace Streamish.Controllers
 		public IActionResult Hottest(DateTime since)
 		{
 			return Ok(_videoRepository.Hottest(since));
+		}
+
+		private UserProfile GetCurrentUserProfile()
+		{
+			var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+			return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
 		}
 	}
 }

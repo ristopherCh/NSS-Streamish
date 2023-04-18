@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { NavItem, NavLink, Navbar } from "reactstrap";
+import { NavLink as RRNavLink } from "react-router-dom";
+import { logout } from "../modules/authManager";
 
-const Header = () => {
+const Header = ({ isLoggedIn, userProfile }) => {
   return (
-    <nav className="navbar navbar-expand navbar-dark bg-info px-3">
+    <Navbar className="navbar navbar-expand navbar-dark bg-info px-3">
       <Link to="/" className="navbar-brand">
         StreamISH
       </Link>
@@ -18,8 +21,22 @@ const Header = () => {
             New Video
           </Link>
         </li>
+        {isLoggedIn && (
+          <>
+            <NavItem>
+              <a
+                aria-current="page"
+                className="nav-link"
+                style={{ cursor: "pointer" }}
+                onClick={logout}
+              >
+                Logout
+              </a>
+            </NavItem>
+          </>
+        )}
       </ul>
-    </nav>
+    </Navbar>
   );
 };
 
